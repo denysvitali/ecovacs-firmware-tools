@@ -85,8 +85,18 @@ func (d *Decryptor) loadFirmware() error {
 func (d *Decryptor) deriveEcovacsKey(sectionType int, sectionSize int) ([]byte, []byte, error) {
 	typeDigit := sectionType
 	sizeHex := fmt.Sprintf("%x", sectionSize)
-	snprintfResult := fmt.Sprintf("ZWNvX2Z3X3RhcmdldCAECO-PT1jdSAtpx30byBtYW4%dy5iaW4%s825xxjeff-hk@126.com",
-		typeDigit, sizeHex)
+
+	// The platform token is the second %s of the key format string. It was
+	// hardcoded to "px30", so non-PX30 devices (e.g. the RV1126 Deebot T9+
+	// with product "rv1126_zj2010") could not be decrypted even though
+	// --platform was already plumbed through to this type.
+	platform := d.Platform
+	if platform == "" {
+		platform = "px30"
+	}
+
+	snprintfResult := fmt.Sprintf("ZWNvX2Z3X3RhcmdldCAECO-PT1jdSAt%sbyBtYW4%dy5iaW4%s825xxjeff-hk@126.com",
+		platform, typeDigit, sizeHex)
 
 	originalLen := len(snprintfResult)
 	encoded := base64.StdEncoding.EncodeToString([]byte(snprintfResult))

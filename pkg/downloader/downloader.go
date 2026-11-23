@@ -69,6 +69,16 @@ var DefaultModels = map[string]ModelConfig{
 		Name:            "DEEBOT N8 PRO",
 		FirmwareModules: []string{"fw0", "AIConfig"},
 	},
+	"lhbd50": {
+		ModelID:         "lhbd50",
+		Name:            "DEEBOT T9+ (PX30, fw 1.x)",
+		FirmwareModules: []string{"fw0"},
+	},
+	"dj8zpr": {
+		ModelID:         "dj8zpr",
+		Name:            "DEEBOT T9 Power / T9+ (RV1126, fw 2.x)",
+		FirmwareModules: []string{"fw0"},
+	},
 }
 
 const userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; A5010 Build/LMY48Z)"
